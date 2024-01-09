@@ -16,6 +16,8 @@ func main() {
 
 	r.Get("/cdnproxy/*", proxyCdn)
 
+	r.Get("/", serveMainPage)
+
 	r.Get("/memes/*", serveArticle)
 
 	http.ListenAndServe(":1641", r)

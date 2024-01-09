@@ -35,6 +35,10 @@ func proxyCdn(w http.ResponseWriter, r *http.Request) {
 	io.Copy(w, resp.Body)
 }
 
+func serveMainPage(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./ui/main.html")
+}
+
 var t = template.Must(template.ParseFiles("ui/article.html"))
 
 func serveArticle(w http.ResponseWriter, r *http.Request) {

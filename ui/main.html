@@ -1,0 +1,35 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>😎</text></svg>">
+        <title>KnowNoMemes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/css/pico.classless.min.css">
+        <link rel="stylesheet" href="/static/css/custom.css">
+    </head>
+    <body>
+        <main>
+            <h1>Know No Memes</h1>
+            <form>
+                <label>
+                    KnowYourMeme URL:
+                    <input id="url" name="url" />
+                </label>
+                <button>Submit</button>
+            </form>
+            <script type="text/javascript">
+                document.querySelector("form").addEventListener("submit", function(e) {
+                    e.preventDefault();
+                    const url = new URL(document.getElementById("url").value);
+                    const path = url.pathname;
+                    if (path.startsWith("/memes")) {
+                        window.location.replace(path);
+                    } else {
+                        alert("Know No Memes currently only supports meme articles!")
+                    }
+                });
+            </script>
+        </main>
+    </body>
+</html>
