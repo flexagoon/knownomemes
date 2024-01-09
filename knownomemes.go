@@ -9,12 +9,14 @@ import (
 func main() {
 	r := chi.NewRouter()
 
+	staticServer := http.FileServer(http.Dir("./static"))
+	r.Handle("/static/*", http.StripPrefix("/static", staticServer))
+
+	r.NotFound(pageNotFound)
+
 	r.Get("/cdnproxy/*", proxyCdn)
 
 	r.Get("/memes/*", serveArticle)
-
-	staticServer := http.FileServer(http.Dir("./static"))
-	r.Handle("/static/*", http.StripPrefix("/static", staticServer))
 
 	http.ListenAndServe(":1641", r)
 }
