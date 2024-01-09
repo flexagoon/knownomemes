@@ -27,8 +27,16 @@ func articleParser(result *strings.Builder) *colly.Collector {
 		result.WriteString(cover)
 		result.WriteString("</hgroup>\n")
 		h.ForEach("#entry_body section.bodycopy :not(#search-interest)", func(i int, h *colly.HTMLElement) {
-			if h.Name == "p" || h.Name == "h2" {
-				result.WriteString(wrapWithTag(h.Text, h.Name))
+			if h.Name == "h2" {
+				result.WriteString(wrapWithTag(h.Text, "h2"))
+			} else if h.Name == "p" {
+				if !h.DOM.Parent().HasClass("references") {
+					text := linkify(h)
+					result.WriteString(wrapWithTag(text, "p"))
+				} else {
+					footnote := parseFootnote(h)
+					result.WriteString(footnote)
+				}
 			} else if h.Name == "lite-youtube" {
 				id := h.Attr("videoid")
 				embed := fmt.Sprintf("<iframe src='https://yewtu.be/embed/%s?autoplay=0' frameborder='0'></iframe>\n", id)
