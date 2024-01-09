@@ -5,18 +5,14 @@ import (
 	"html/template"
 	"io"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/go-chi/chi/v5"
 )
 
-var page404, _ = os.ReadFile("./ui/404.html")
-
 func pageNotFound(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
-	w.Header().Set("Content-Type", "text/html")
-	w.Write(page404)
+	http.ServeFile(w, r, "./ui/404.html")
 }
 
 func proxyCdn(w http.ResponseWriter, r *http.Request) {
