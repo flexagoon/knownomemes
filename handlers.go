@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/gocolly/colly"
 )
 
 func pageNotFound(w http.ResponseWriter, r *http.Request) {
@@ -49,7 +50,17 @@ func serveArticle(w http.ResponseWriter, r *http.Request) {
 
 	c := articleParser(&result)
 
+	var err error
+	c.OnError(func(r *colly.Response, e error) {
+		err = e
+	})
+
 	c.Visit(url)
+
+	if err != nil {
+		pageNotFound(w, r)
+		return
+	}
 
 	t.ExecuteTemplate(w, "article.html", template.HTML(result.String()))
 }
