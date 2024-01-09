@@ -41,6 +41,12 @@ func articleParser(result *strings.Builder) *colly.Collector {
 				id := h.Attr("videoid")
 				embed := fmt.Sprintf("<iframe src='https://yewtu.be/embed/%s?autoplay=0&local=true' frameborder='0'></iframe>\n", id)
 				result.WriteString(embed)
+			} else if h.Name == "lite-tiktok" {
+				id := h.Attr("videoid")
+				tiktokUrl := fmt.Sprintf("https://tiktok.com/@knm/video/%s", id)
+				proxitokUrl := fmt.Sprintf("https://proxitok.belloworld.it/@knm/video/%s", id)
+				text := fmt.Sprintf("<a href='%s'>♪ TikTok Video</a> (<a href='%s'>Mirror</a>)", tiktokUrl, proxitokUrl)
+				result.WriteString(wrapWithTag(text, "p"))
 			} else if h.Name == "img" {
 				src := h.Attr("data-src")
 				img := proxyImage(src)
