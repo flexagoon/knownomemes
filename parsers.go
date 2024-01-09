@@ -41,7 +41,7 @@ func articleParser(result *strings.Builder) *colly.Collector {
 				}
 			} else if h.Name == "lite-youtube" {
 				id := h.Attr("videoid")
-				embed := fmt.Sprintf("<iframe src='https://yewtu.be/embed/%s?autoplay=0&local=true' frameborder='0'></iframe>\n", id)
+				embed := fmt.Sprintf("<iframe src='https://yewtu.be/embed/%s?autoplay=0&local=true'></iframe>\n", id)
 				result.WriteString(embed)
 			} else if h.Name == "lite-tiktok" {
 				id := h.Attr("videoid")
