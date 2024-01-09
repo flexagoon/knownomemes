@@ -32,7 +32,9 @@ func articleParser(result *strings.Builder) *colly.Collector {
 			} else if h.Name == "p" {
 				if !h.DOM.Parent().HasClass("references") {
 					text := linkify(h)
-					result.WriteString(wrapWithTag(text, "p"))
+					if text != "" {
+						result.WriteString(wrapWithTag(text, "p"))
+					}
 				} else {
 					footnote := parseFootnote(h)
 					result.WriteString(footnote)
